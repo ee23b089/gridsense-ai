@@ -1,12 +1,12 @@
 # GridSense AI
 
-A placement portfolio starter combining electrical engineering fundamentals, backend API development, data visualization, and rule-based anomaly detection.
+A full-stack energy monitoring demo with a FastAPI backend, React dashboard, rule-based alerts, and Isolation Forest anomaly detection.
 
 ## Current scope (Milestone 1)
 - Deterministic synthetic single-phase electrical readings
 - FastAPI backend
 - Electrical calculations: apparent power, active power, and estimated interval energy
-- Rule-based abnormal-reading flags (explicitly not a trained AI model)
+- Rule-based abnormal-reading flags and an Isolation Forest anomaly detector
 - React + TypeScript dashboard
 - Automated backend tests
 
@@ -89,8 +89,15 @@ generator        + summary calculations
 ## Next milestones
 1. Persist readings in PostgreSQL.
 2. Add a documented CSV import path for real or public datasets.
-3. Add ML anomaly detection and evaluate precision/recall on labeled test data.
+3. Evaluate the Isolation Forest on labeled real or public readings, then report precision and recall.
 4. Add time-series forecasting with a proper temporal train/test split.
 5. Add optional hardware/Modbus ingestion only after validating the electrical and communication setup.
 
-Do not describe the current rules as machine learning or predictive failure detection. The first version flags threshold-based anomalies only.
+Keep rule-based flags and Isolation Forest predictions clearly distinguished. All current readings are synthetic and are not suitable for safety-critical decisions.
+
+## Deploy to Render
+
+This repository includes a Render Blueprint for the FastAPI backend and React static site. Push the project to GitHub, then in Render choose New → Blueprint, connect the repository, and deploy the Blueprint. The frontend gets the backend URL from the backend service automatically.
+
+The free backend may sleep after inactivity and take about a minute to wake. This setup is for a demo; readings are synthetic and are not suitable for safety-critical use.
+

@@ -5,7 +5,7 @@ type Reading = { timestamp: string; voltage_v: number; current_a: number; power_
 type Summary = { reading_count: number; average_voltage_v: number; average_current_a: number; average_power_kw: number; total_energy_kwh: number; anomaly_count: number };
 type View = "Overview" | "Live monitor" | "Anomalies" | "Energy reports" | "Settings";
 type Range = "1h" | "6h" | "24h" | "7d";
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 const RANGE_COUNTS: Record<Range, number> = { "1h": 12, "6h": 72, "24h": 288, "7d": 2016 };
 const fmt = (value: number | undefined, digits = 1) => typeof value === "number" ? value.toLocaleString(undefined, { maximumFractionDigits: digits }) : "—";
 
@@ -130,4 +130,5 @@ function App() {
   </div>;
 }
 export default App;
+
 

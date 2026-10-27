@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from .ml_model import train_model, predict_anomalies
 from fastapi import FastAPI, Query
@@ -6,13 +7,13 @@ from .service import generate_readings, summarize
 
 app = FastAPI(
     title="GridSense AI API",
-    description="Synthetic electrical monitoring MVP. Current alerts are threshold rules, not an ML model.",
+    description="Synthetic electrical monitoring demo with rule-based alerts and Isolation Forest anomaly detection.",
     version="0.1.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[origin.strip() for origin in os.getenv("CORS_ORIGINS", "*").split(",") if origin.strip()],
     allow_credentials=False,
     allow_methods=["GET"],
     allow_headers=["*"],
@@ -64,3 +65,4 @@ def get_summary(count: int = Query(default=288, ge=1, le=2880)):
 def get_anomalies(count: int = Query(default=288, ge=1, le=2880)):
     items = generate_readings(count)
     return {"items": [r.model_dump() for r in items if r.is_anomaly]}
+
